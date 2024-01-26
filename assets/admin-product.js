@@ -1,5 +1,33 @@
 jQuery( function ( $ ) {
 
+	// Promoted options.
+	function show_or_hide_promoted_product_fields( isPromotedProductEnabled ) {
+		const $promotedProductFields = $( '.promoted_fields' );
+		$promotedProductFields.toggle( isPromotedProductEnabled );
+	}
+
+	$( 'input#wlc_promoted_product_id' )
+		.on( 'change', function () {
+			const isPromotedProductEnabled = $( this ).is( ':checked' );
+			show_or_hide_promoted_product_fields( isPromotedProductEnabled );
+
+			$( 'input#wlc_promoted_product_expiry' ).trigger( 'change' );
+		} )
+		.trigger( 'change' );
+
+	// Expiry options.
+	function show_or_hide_expiry_fields( isExpiryEnabled ) {
+		const $expiryFields = $( '.expiry_fields' );
+		$expiryFields.toggle( isExpiryEnabled );
+	}
+
+	$( 'input#wlc_promoted_product_expiry' )
+		.on( 'change', function () {
+			const isExpiryEnabled = $( this ).is( ':checked' );
+			show_or_hide_expiry_fields( isExpiryEnabled );
+		} )
+		.trigger( 'change' );
+
 	// DateTime Picker
 	$( document.body )
 		.on( 'wlc-init-datetimepickers', function () {

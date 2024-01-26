@@ -12,17 +12,17 @@ class EditProduct {
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 
-		add_action( 'woocommerce_product_options_general_product_data', array( $this, 'add_id_field' ) );
-		add_action( 'woocommerce_process_product_meta', array( $this, 'save_id_field' ) );
+		add_action( 'woocommerce_product_options_general_product_data', array( $this, 'add_id_field' ), 11 );
+		add_action( 'woocommerce_process_product_meta', array( $this, 'save_id_field' ), 11 );
 
-		add_action( 'woocommerce_product_options_general_product_data', array( $this, 'add_custom_title_field' ) );
-		add_action( 'woocommerce_process_product_meta', array( $this, 'save_custom_title_field' ) );
+		add_action( 'woocommerce_product_options_general_product_data', array( $this, 'add_custom_title_field' ), 13 );
+		add_action( 'woocommerce_process_product_meta', array( $this, 'save_custom_title_field' ), 13 );
 
-		add_action( 'woocommerce_product_options_general_product_data', array( $this, 'add_expiry_field' ) );
-		add_action( 'woocommerce_process_product_meta', array( $this, 'save_expiry_field' ) );
+		add_action( 'woocommerce_product_options_general_product_data', array( $this, 'add_expiry_field' ), 14 );
+		add_action( 'woocommerce_process_product_meta', array( $this, 'save_expiry_field' ), 14 );
 
-		add_action( 'woocommerce_product_options_general_product_data', array( $this, 'add_expiry_date_field' ) );
-		add_action( 'woocommerce_process_product_meta', array( $this, 'save_expiry_date_field' ) );
+		add_action( 'woocommerce_product_options_general_product_data', array( $this, 'add_expiry_date_field' ), 15 );
+		add_action( 'woocommerce_process_product_meta', array( $this, 'save_expiry_date_field' ), 15 );
 	}
 
 	/**
@@ -87,6 +87,8 @@ class EditProduct {
 				'value'       => wc_bool_to_string( $post->ID === absint( get_option( 'wlc_promoted_product_id' ) ) ),
 			)
 		);
+
+		echo '<div class="promoted_fields">';
 	}
 
 	/**
@@ -191,6 +193,8 @@ class EditProduct {
 	 * @return void
 	 */
 	public function add_expiry_date_field() {
+		echo '<div class="expiry_fields">';
+
 		// Expiry date.
 		$expiry_date = get_option( 'wlc_promoted_product_expiry_date' );
 		woocommerce_wp_text_input(
@@ -204,6 +208,8 @@ class EditProduct {
 				'class'             => 'datetime-picker',
 			)
 		);
+
+		echo '</div></div>';
 	}
 
 	/**
