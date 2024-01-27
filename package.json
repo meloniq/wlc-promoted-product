@@ -1,0 +1,22 @@
+{
+	"name": "wlc-promoted-product",
+	"title": "WLC Promoted Product",
+	"version": "1.0.0",
+	"description": "Set Promoted Product for WooCommerce.",
+	"homepage": "https://blog.meloniq.net/",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/meloniq/wlc-promoted-product.git"
+	},
+	"author": {
+		"name": "MELONIQ.NET",
+		"url": "https://blog.meloniq.net/"
+	},
+	"license": "GPL-2.0-or-later",
+	"scripts": {
+		"min:js:admin": "uglifyjs assets/admin-product.js --compress --mangle --warn --output assets/admin-product.min.js"
+	},
+	"devDependencies": {
+		"uglify-js": "^3.17.4"
+	}
+}

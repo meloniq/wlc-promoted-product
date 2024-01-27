@@ -1,5 +1,4 @@
 jQuery( function ( $ ) {
-
 	// Promoted options.
 	function show_or_hide_promoted_product_fields( isPromotedProductEnabled ) {
 		const $promotedProductFields = $( '.promoted_fields' );
@@ -44,5 +43,4 @@ jQuery( function ( $ ) {
 			} );
 		} )
 		.trigger( 'wlc-init-datetimepickers' );
-
 } );

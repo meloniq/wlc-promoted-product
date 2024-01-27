@@ -34,7 +34,7 @@ class EditProduct {
 		$screen    = get_current_screen();
 		$screen_id = $screen ? $screen->id : '';
 
-		wp_register_style( 'jquery-ui-timepicker-style', WLC_PP_PLUGIN_URL . '/assets/jquery-ui-timepicker-addon.min.css', array(), '1.6.3' );
+		wp_register_style( 'jquery-ui-timepicker-style', WLC_PP_PLUGIN_URL . '/assets/lib/jquery-ui-timepicker-addon.min.css', array(), '1.6.3' );
 
 		if ( in_array( $screen_id, array( 'product', 'edit-product' ) ) ) {
 			wp_enqueue_style( 'jquery-ui-timepicker-style' );
@@ -50,8 +50,8 @@ class EditProduct {
 		$screen    = get_current_screen();
 		$screen_id = $screen ? $screen->id : '';
 
-		wp_register_script( 'jquery-ui-timepicker', WLC_PP_PLUGIN_URL . '/assets/jquery-ui-timepicker-addon.min.js', array( 'jquery', 'jquery-ui-datepicker' ), '1.6.3', true );
-		wp_register_script( 'wlc-admin-product', WLC_PP_PLUGIN_URL . '/assets/admin-product.js', array( 'jquery-ui-timepicker' ), '1.0', true );
+		wp_register_script( 'jquery-ui-timepicker', WLC_PP_PLUGIN_URL . '/assets/lib/jquery-ui-timepicker-addon.min.js', array( 'jquery', 'jquery-ui-datepicker' ), '1.6.3', true );
+		wp_register_script( 'wlc-admin-product', WLC_PP_PLUGIN_URL . '/assets/admin-product.min.js', array( 'jquery-ui-timepicker' ), '1.0', true );
 		wp_localize_script(
 			'wlc-admin-product',
 			'wlc_admin_product_params',
