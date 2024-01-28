@@ -27,7 +27,9 @@ Spaghetti with green pesto.
 
 == Screenshots ==
 
-1. Settings
+1. WC Settings
+2. Product data
+3. Frontend
 
 == Changelog ==
 
