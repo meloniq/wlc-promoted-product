@@ -88,10 +88,13 @@ class Settings {
 			return __( 'No promoted product selected.', WLC_PP_TD );
 		}
 
-		// check expire time
-		$expire_time = get_post_meta( $promoted_product_id, 'wlc_promoted_product_expire_time', true );
-		if ( $expire_time && $expire_time < current_time( 'timestamp' ) ) {
-			return __( 'Promoted product expired.', WLC_PP_TD );
+		// check expiry
+		$expiry = get_option( 'wlc_promoted_product_expiry' );
+		if ( $expiry ) {
+			$expiry_date = get_option( 'wlc_promoted_product_expiry_date' );
+			if ( strtotime( $expiry_date ) < current_time( 'timestamp' ) ) {
+				return __( 'Promoted product expired.', WLC_PP_TD );
+			}
 		}
 
 		$link  = get_edit_post_link( $promoted_product_id );
