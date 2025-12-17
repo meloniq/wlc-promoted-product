@@ -14,7 +14,7 @@
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       wlc-promoted-product
  *
- * @package           meloniq
+ * @package           Wlc\PromotedProduct
  */
 
 namespace Wlc\PromotedProduct;
@@ -28,7 +28,7 @@ define( 'WLC_PP_TD', 'wlc-promoted-product' );
 define( 'WLC_PP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 // Include the autoloader so we can dynamically include the rest of the classes.
-require_once trailingslashit( dirname( __FILE__ ) ) . 'vendor/autoload.php';
+require_once trailingslashit( __DIR__ ) . 'vendor/autoload.php';
 
 /**
  * Setup Plugin data.

@@ -27,7 +27,7 @@ jQuery( function ( $ ) {
 		} )
 		.trigger( 'change' );
 
-	// DateTime Picker
+	// DateTime Picker.
 	$( document.body )
 		.on( 'wlc-init-datetimepickers', function () {
 			$( '.datetime-picker-field, .datetime-picker' ).datetimepicker( {

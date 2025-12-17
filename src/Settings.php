@@ -1,6 +1,15 @@
 <?php
+/**
+ * Class Settings
+ *
+ * @package Wlc\PromotedProduct
+ */
+
 namespace Wlc\PromotedProduct;
 
+/**
+ * Class Settings
+ */
 class Settings {
 
 	/**
@@ -15,49 +24,49 @@ class Settings {
 	/**
 	 * Add settings to WooCommerce > Settings > Products > General.
 	 *
-	 * @param array $settings
+	 * @param array $settings Existing settings.
 	 *
 	 * @return array
 	 */
 	public function add_products_general_settings( $settings ) {
 		$settings[] = array(
-			'title' => __( 'WLC Promoted Product', WLC_PP_TD ),
+			'title' => __( 'WLC Promoted Product', 'wlc-promoted-product' ),
 			'type'  => 'title',
 			'desc'  => '',
 			'id'    => 'products_general_settings',
 		);
 
 		$settings[] = array(
-			'title'       => __( 'Title prefix', WLC_PP_TD ),
+			'title'       => __( 'Title prefix', 'wlc-promoted-product' ),
 			'id'          => 'wlc_promoted_product_title_prefix',
 			'type'        => 'text',
-			'default'     => __( 'FLASH SALE: ', WLC_PP_TD ),
+			'default'     => __( 'FLASH SALE: ', 'wlc-promoted-product' ),
 			'class'       => '',
 			'css'         => '',
 			'placeholder' => '',
-			'desc_tip'    => __( 'This text will be added before the promoted product title.', WLC_PP_TD ),
+			'desc_tip'    => __( 'This text will be added before the promoted product title.', 'wlc-promoted-product' ),
 		);
 
 		$settings[] = array(
-			'title'       => __( 'Background color', WLC_PP_TD ),
+			'title'       => __( 'Background color', 'wlc-promoted-product' ),
 			'id'          => 'wlc_promoted_product_bg_color',
 			'type'        => 'color',
 			'default'     => '',
 			'class'       => '',
 			'css'         => '',
 			'placeholder' => '',
-			'desc_tip'    => __( 'This is the promoted product background color.', WLC_PP_TD ),
+			'desc_tip'    => __( 'This is the promoted product background color.', 'wlc-promoted-product' ),
 		);
 
 		$settings[] = array(
-			'title'       => __( 'Text color', WLC_PP_TD ),
+			'title'       => __( 'Text color', 'wlc-promoted-product' ),
 			'id'          => 'wlc_promoted_product_text_color',
 			'type'        => 'color',
 			'default'     => '',
 			'class'       => '',
 			'css'         => '',
 			'placeholder' => '',
-			'desc_tip'    => __( 'This is the promoted product text color.', WLC_PP_TD ),
+			'desc_tip'    => __( 'This is the promoted product text color.', 'wlc-promoted-product' ),
 		);
 
 		$settings[] = array(
@@ -83,17 +92,17 @@ class Settings {
 	protected function get_promoted_product_link() {
 		$promoted_product_id = get_option( 'wlc_promoted_product_id' );
 
-		// check if promoted product is selected
+		// check if promoted product is selected.
 		if ( ! $promoted_product_id ) {
-			return __( 'No promoted product selected.', WLC_PP_TD );
+			return __( 'No promoted product selected.', 'wlc-promoted-product' );
 		}
 
-		// check expiry
+		// check expiry.
 		$expiry = get_option( 'wlc_promoted_product_expiry' );
 		if ( $expiry ) {
 			$expiry_date = get_option( 'wlc_promoted_product_expiry_date' );
 			if ( strtotime( $expiry_date ) < current_time( 'timestamp' ) ) {
-				return __( 'Promoted product expired.', WLC_PP_TD );
+				return __( 'Promoted product expired.', 'wlc-promoted-product' );
 			}
 		}
 

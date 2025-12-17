@@ -1,6 +1,15 @@
 <?php
+/**
+ * Class Frontend
+ *
+ * @package Wlc\PromotedProduct
+ */
+
 namespace Wlc\PromotedProduct;
 
+/**
+ * Class Frontend
+ */
 class Frontend {
 
 	/**
@@ -55,7 +64,7 @@ class Frontend {
 		<div class="wlc-promoted-product-info" style="<?php echo esc_attr( $style ); ?>">
 			<div class="wlc-promoted-product-info__inner">
 				<?php echo esc_html( $title_prefix ); ?>
-				<?php echo sprintf( '<a href="%s">%s</a>', $link, esc_html( $custom_title ) ); ?>
+				<?php printf( '<a href="%s">%s</a>', $link, esc_html( $custom_title ) ); ?>
 			</div>
 		</div>
 		<?php
@@ -64,7 +73,7 @@ class Frontend {
 	/**
 	 * Is product promoted.
 	 *
-	 * @param int $product_id
+	 * @param int $product_id Product ID.
 	 *
 	 * @return bool
 	 */
@@ -85,7 +94,7 @@ class Frontend {
 	/**
 	 * Is promoted product expired.
 	 *
-	 * @param int $product_id
+	 * @param int $product_id Product ID.
 	 *
 	 * @return bool
 	 */
@@ -107,6 +116,4 @@ class Frontend {
 
 		return false;
 	}
-
-
 }

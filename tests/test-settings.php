@@ -1,11 +1,17 @@
 <?php
+/**
+ * Settings class tests.
+ *
+ * @package Wlc\PromotedProduct\Tests
+ */
+
 use Wlc\PromotedProduct\Settings;
 use WP_Mock\Matcher\AnyInstance;
 use WP_Mock\Tools\TestCase;
 
 final class SettingsTestCase extends TestCase {
 
-	public function test_hook_expectations() : void {
+	public function test_hook_expectations(): void {
 		$anySettings = new AnyInstance( Settings::class );
 
 		WP_Mock::expectFilterAdded( 'woocommerce_products_general_settings', array( $anySettings, 'add_products_general_settings' ) );
@@ -15,15 +21,15 @@ final class SettingsTestCase extends TestCase {
 		$this->assertConditionsMet();
 	}
 
-	public function test_add_products_general_settings() : void {
+	public function test_add_products_general_settings(): void {
 		$settingsInstance = new Settings();
 
-		WP_Mock::userFunction('get_option')->once()->with('wlc_promoted_product_id')->andReturn(123);
-		WP_Mock::userFunction('get_option')->once()->with('wlc_promoted_product_expiry')->andReturn(1);
-		WP_Mock::userFunction('get_option')->once()->with('wlc_promoted_product_expiry_date')->andReturn(date('Y-m-d H:i', time() + 1000));
-		WP_Mock::userFunction('current_time')->once()->with('timestamp')->andReturn(time());
-		WP_Mock::userFunction('get_edit_post_link')->once()->with(123)->andReturn('http://example.com');
-		WP_Mock::userFunction('get_the_title')->once()->with(123)->andReturn('Hello World');
+		WP_Mock::userFunction( 'get_option' )->once()->with( 'wlc_promoted_product_id' )->andReturn( 123 );
+		WP_Mock::userFunction( 'get_option' )->once()->with( 'wlc_promoted_product_expiry' )->andReturn( 1 );
+		WP_Mock::userFunction( 'get_option' )->once()->with( 'wlc_promoted_product_expiry_date' )->andReturn( date( 'Y-m-d H:i', time() + 1000 ) );
+		WP_Mock::userFunction( 'current_time' )->once()->with( 'timestamp' )->andReturn( time() );
+		WP_Mock::userFunction( 'get_edit_post_link' )->once()->with( 123 )->andReturn( 'http://example.com' );
+		WP_Mock::userFunction( 'get_the_title' )->once()->with( 123 )->andReturn( 'Hello World' );
 
 		$settings = $settingsInstance->add_products_general_settings( array() );
 
@@ -53,5 +59,4 @@ final class SettingsTestCase extends TestCase {
 		$this->assertArrayHasKey( 'type', $settings[5] );
 		$this->assertEquals( 'sectionend', $settings[5]['type'] );
 	}
-
 }

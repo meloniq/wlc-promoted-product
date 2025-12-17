@@ -1,6 +1,15 @@
 <?php
+/**
+ * Class EditProduct
+ *
+ * @package Wlc\PromotedProduct
+ */
+
 namespace Wlc\PromotedProduct;
 
+/**
+ * Class EditProduct
+ */
 class EditProduct {
 
 	/**
@@ -36,7 +45,7 @@ class EditProduct {
 
 		wp_register_style( 'jquery-ui-timepicker-style', WLC_PP_PLUGIN_URL . '/assets/lib/jquery-ui-timepicker-addon.min.css', array(), '1.6.3' );
 
-		if ( in_array( $screen_id, array( 'product', 'edit-product' ) ) ) {
+		if ( in_array( $screen_id, array( 'product', 'edit-product' ), true ) ) {
 			wp_enqueue_style( 'jquery-ui-timepicker-style' );
 		}
 	}
@@ -56,17 +65,17 @@ class EditProduct {
 			'wlc-admin-product',
 			'wlc_admin_product_params',
 			array(
-				'i18n_time_only_title' => _x( 'Choose Time', 'timepicker', WLC_PP_TD ),
-				'i18n_time_text'       => _x( 'Time', 'timepicker', WLC_PP_TD ),
-				'i18n_hour_text'       => _x( 'Hour', 'timepicker', WLC_PP_TD ),
-				'i18n_minute_text'     => _x( 'Minute', 'timepicker', WLC_PP_TD ),
-				'i18n_second_text'     => _x( 'Second', 'timepicker', WLC_PP_TD ),
-				'i18n_current_text'    => _x( 'Now', 'timepicker', WLC_PP_TD ),
-				'i18n_close_text'      => _x( 'Done', 'timepicker', WLC_PP_TD ),
+				'i18n_time_only_title' => _x( 'Choose Time', 'timepicker', 'wlc-promoted-product' ),
+				'i18n_time_text'       => _x( 'Time', 'timepicker', 'wlc-promoted-product' ),
+				'i18n_hour_text'       => _x( 'Hour', 'timepicker', 'wlc-promoted-product' ),
+				'i18n_minute_text'     => _x( 'Minute', 'timepicker', 'wlc-promoted-product' ),
+				'i18n_second_text'     => _x( 'Second', 'timepicker', 'wlc-promoted-product' ),
+				'i18n_current_text'    => _x( 'Now', 'timepicker', 'wlc-promoted-product' ),
+				'i18n_close_text'      => _x( 'Done', 'timepicker', 'wlc-promoted-product' ),
 			)
 		);
 
-		if ( in_array( $screen_id, array( 'product', 'edit-product' ) ) ) {
+		if ( in_array( $screen_id, array( 'product', 'edit-product' ), true ) ) {
 			wp_enqueue_script( 'wlc-admin-product' );
 		}
 	}
@@ -79,12 +88,14 @@ class EditProduct {
 	public function add_id_field() {
 		global $post;
 
+		$promoted_product_id = absint( get_option( 'wlc_promoted_product_id' ) );
+
 		woocommerce_wp_checkbox(
 			array(
 				'id'          => 'wlc_promoted_product_id',
-				'label'       => __( 'Promote this product', WLC_PP_TD ),
-				'description' => __( 'Check this box if you want to promote this product.', WLC_PP_TD ),
-				'value'       => wc_bool_to_string( $post->ID === absint( get_option( 'wlc_promoted_product_id' ) ) ),
+				'label'       => __( 'Promote this product', 'wlc-promoted-product' ),
+				'description' => __( 'Check this box if you want to promote this product.', 'wlc-promoted-product' ),
+				'value'       => wc_bool_to_string( $post->ID === $promoted_product_id ),
 			)
 		);
 
@@ -94,7 +105,7 @@ class EditProduct {
 	/**
 	 * Save Promoted Product ID field.
 	 *
-	 * @param int $post_id
+	 * @param int $post_id Product ID.
 	 *
 	 * @return void
 	 */
@@ -102,14 +113,14 @@ class EditProduct {
 		$promoted_product_id = absint( get_option( 'wlc_promoted_product_id' ) );
 
 		if ( $promoted_product_id && $promoted_product_id === $post_id ) {
-			// unset promoted product if it's unchecked
+			// unset promoted product if it's unchecked.
 			if ( ! isset( $_POST['wlc_promoted_product_id'] ) ) {
 				update_option( 'wlc_promoted_product_id', '' );
 				return;
 			}
 		}
 
-		// set promoted product if it's checked
+		// set promoted product if it's checked.
 		if ( ! empty( $_POST['wlc_promoted_product_id'] ) ) {
 			update_option( 'wlc_promoted_product_id', $post_id );
 			return;
@@ -125,9 +136,9 @@ class EditProduct {
 		woocommerce_wp_text_input(
 			array(
 				'id'          => 'wlc_promoted_product_custom_title',
-				'label'       => __( 'Set custom title', WLC_PP_TD ),
+				'label'       => __( 'Set custom title', 'wlc-promoted-product' ),
 				'type'        => 'text',
-				'description' => __( 'Enter the custom title for promoted product.', WLC_PP_TD ),
+				'description' => __( 'Enter the custom title for promoted product.', 'wlc-promoted-product' ),
 				'value'       => esc_attr( get_option( 'wlc_promoted_product_custom_title' ) ),
 			)
 		);
@@ -136,12 +147,12 @@ class EditProduct {
 	/**
 	 * Save Promoted Product custom title field.
 	 *
-	 * @param int $post_id
+	 * @param int $post_id Product ID.
 	 *
 	 * @return void
 	 */
 	public function save_custom_title_field( $post_id ) {
-		$custom_title = wp_kses_post( $_POST['wlc_promoted_product_custom_title'] );
+		$custom_title = isset( $_POST['wlc_promoted_product_custom_title'] ) ? wp_kses_post( $_POST['wlc_promoted_product_custom_title'] ) : '';
 
 		update_option( 'wlc_promoted_product_custom_title', $custom_title );
 	}
@@ -155,8 +166,8 @@ class EditProduct {
 		woocommerce_wp_checkbox(
 			array(
 				'id'          => 'wlc_promoted_product_expiry',
-				'label'       => __( 'Expiry this product', WLC_PP_TD ),
-				'description' => __( 'Check this box if you want to expiry this product.', WLC_PP_TD ),
+				'label'       => __( 'Expiry this product', 'wlc-promoted-product' ),
+				'description' => __( 'Check this box if you want to expiry this product.', 'wlc-promoted-product' ),
 				'value'       => wc_bool_to_string( absint( get_option( 'wlc_promoted_product_expiry' ) ) ),
 			)
 		);
@@ -165,7 +176,7 @@ class EditProduct {
 	/**
 	 * Save Promoted Product Expiry field.
 	 *
-	 * @param int $post_id
+	 * @param int $post_id Product ID.
 	 *
 	 * @return void
 	 */
@@ -173,13 +184,13 @@ class EditProduct {
 		$promoted_product_id = absint( get_option( 'wlc_promoted_product_id' ) );
 
 		if ( $promoted_product_id && $promoted_product_id === $post_id ) {
-			// unset promoted product expiry if it's unchecked
+			// unset promoted product expiry if it's unchecked.
 			if ( ! isset( $_POST['wlc_promoted_product_expiry'] ) ) {
 				update_option( 'wlc_promoted_product_expiry', '' );
 				return;
 			}
 
-			// set promoted product expiry if it's checked
+			// set promoted product expiry if it's checked.
 			if ( ! empty( $_POST['wlc_promoted_product_expiry'] ) ) {
 				update_option( 'wlc_promoted_product_expiry', 1 );
 				return;
@@ -199,13 +210,13 @@ class EditProduct {
 		$expiry_date = get_option( 'wlc_promoted_product_expiry_date' );
 		woocommerce_wp_text_input(
 			array(
-				'id'                => 'wlc_promoted_product_expiry_date',
-				'value'             => esc_attr( $expiry_date ),
-				'label'             => __( 'Expiry date', WLC_PP_TD ),
-				'placeholder'       => 'YYYY-MM-DD HH:MM',
-				'description'       => __( 'The promoted product will expire at this date.', WLC_PP_TD ),
-				'desc_tip'          => true,
-				'class'             => 'datetime-picker',
+				'id'          => 'wlc_promoted_product_expiry_date',
+				'value'       => esc_attr( $expiry_date ),
+				'label'       => __( 'Expiry date', 'wlc-promoted-product' ),
+				'placeholder' => 'YYYY-MM-DD HH:MM',
+				'description' => __( 'The promoted product will expire at this date.', 'wlc-promoted-product' ),
+				'desc_tip'    => true,
+				'class'       => 'datetime-picker',
 			)
 		);
 
@@ -215,7 +226,7 @@ class EditProduct {
 	/**
 	 * Save Promoted Product expiry date field.
 	 *
-	 * @param int $post_id
+	 * @param int $post_id Product ID.
 	 *
 	 * @return void
 	 */
